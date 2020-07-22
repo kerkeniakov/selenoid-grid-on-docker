@@ -1,0 +1,29 @@
+#there is binding issues with current docker version and windows so use absolute paths and add path sharing in docker GUI
+#don't forget to docker pull aerokube/video-recorder:latest and aerokube/chrome:latest
+version: '3'
+services:
+  selenoid:
+    image: "aerokube/selenoid"
+    network_mode: bridge
+    ports:
+    - "4444:4444"
+    volumes:
+    - "/c/dev/docker-lec/:/etc/selenoid/" # assumed current dir contains browsers.json
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/c/Users/link/video/:/opt/selenoid/video"
+    environment:
+    - OVERRIDE_VIDEO_OUTPUT_DIR=/c/Users/link/video/
+    command: ["-conf", "/etc/selenoid/browsers.json"]
+
+
+  selenoid-ui:
+    image: "aerokube/selenoid-ui"
+    depends_on:
+    - selenoid
+    network_mode: bridge
+    links:
+    - selenoid
+    ports:
+    - "8080:8080"
+    command: ["--selenoid-uri", "http://selenoid:4444"]
+

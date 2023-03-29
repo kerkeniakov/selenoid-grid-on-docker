@@ -6,7 +6,7 @@ services:
     ports:
       - ":4444:4444"
     volumes:
-      - "/home/linky:/etc/selenoid/" # assumed current dir contains browsers.jso                                                                    n
+      - "/home/linky:/etc/selenoid/" # assumed current dir contains browsers.json                                                                 n
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "/home/linky/video:/opt/selenoid/video" # change to your video save path
       - "/home/linky/logs:/opt/selenoid/logs" # change to your logs save path
